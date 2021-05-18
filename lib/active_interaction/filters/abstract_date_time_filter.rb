@@ -43,7 +43,7 @@ module ActiveInteraction
       if format?
         klass.strptime(value, format)
       else
-        klass.parse(value) ||
+        (klass.respond_to?(:zone) ? klass.zone.parse(value) : klass.parse(value)) ||
           (raise ArgumentError, "no time information in #{value.inspect}")
       end
     end
